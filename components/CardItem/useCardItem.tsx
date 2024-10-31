@@ -52,10 +52,19 @@ export default function useCardItem() {
 			const headers = {
 				"X-User-Bearer": `Bearer ${token}`,
 			}
+			const body = {
+					"reason": "5",
+					"description": "Blocking requested by the cardholder"
+			}
+			if (mode === 'unblock') {
+				body.reason = "1"
+				body.description = "unBlocking requested by the cardholder"
+			}
 			await axiosInstance({
 				method: "PUT",
 				url: url.join('/'),
 				headers,
+				data: body
 			});
 			successToast(mode);
 			callback && callback();
@@ -90,7 +99,7 @@ export default function useCardItem() {
 			const action = modalStrings[mode]
 			return (
 				<Toast nativeID={toastId} action={'info'}>
-					<VStack space="xs" flex={1}>
+					<VStack w={"$full"}>
 						<ToastTitle>{action.title}</ToastTitle>
 						<ToastDescription>
 							{action.description}
