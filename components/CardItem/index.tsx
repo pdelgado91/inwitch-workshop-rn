@@ -79,6 +79,11 @@ const CardItem: React.FC<CardItemProps> = ({handleReload,...props}) => {
 						status={props.status as "active" | "blocked"}
 					/>
 				</HStack>
+				{props.statusDescription && (
+					<WrappedText mt={"$1"} fontSize={"$sm"}>
+						{props.statusDescription}
+					</WrappedText>
+				)}
 			</CardWrapper>
 		</Box>
 	)
