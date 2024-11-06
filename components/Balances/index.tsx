@@ -13,13 +13,12 @@ const WalletMasterBalance = () => {
 	const toggleUSDSwitch = () => setIsUSDEnabled(previousState => !previousState);
 	var { balance, loading, error } = useGetBalance(entityMaster);
 
-	if (isCRCEnabled === false) {
-		balance = balance.filter((data) => data?.balance?.currency != "CRC");
+	const filterBalances = (balance_info: any, currency_available: boolean, currencyCode: string) => {
+		return currency_available === false ? balance_info && balance_info.filter((data) => data?.balance?.currency != currencyCode) : balance;
 	}
 
-	if (isUSDEnabled === false) {
-		balance = balance.filter((data) => data?.balance?.currency != "USD");
-	}
+	balance = filterBalances(balance, isCRCEnabled, "CRC");
+	balance = filterBalances(balance, isUSDEnabled, "USD");
 
 	return (
 		<Container>
