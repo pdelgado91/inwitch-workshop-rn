@@ -9,13 +9,10 @@ import { useEffect, useState } from "react";
 const WalletMasterBalance = () => {
 	const [isCRCEnabled, setIsCRCEnabled] = useState(true);
 	const [isUSDEnabled, setIsUSDEnabled] = useState(true);
+	var { balance, loading, error, filterBalances } = useGetBalance(entityMaster);
 	const toggleCRCSwitch = () => setIsCRCEnabled(previousState => !previousState);
 	const toggleUSDSwitch = () => setIsUSDEnabled(previousState => !previousState);
-	var { balance, loading, error } = useGetBalance(entityMaster);
 
-	const filterBalances = (balance_info: any, currency_available: boolean, currencyCode: string) => {
-		return currency_available === false ? balance_info && balance_info.filter((data) => data?.balance?.currency != currencyCode) : balance;
-	}
 
 	balance = filterBalances(balance, isCRCEnabled, "CRC");
 	balance = filterBalances(balance, isUSDEnabled, "USD");
